@@ -1,0 +1,61 @@
+
+########################################################
+####      					      ####
+####                    Module 1                    ####
+####      					      ####
+########################################################
+
+
+1) Routers Configuration
+
+	HA-R1 :
+	=======
+
+	a) Basic configuration:
+
+		en		
+		conf t
+		enable secret cisco
+		hostname HA-R1
+		no ip domain-lookup
+		ip domain-name cisco.com
+		username student secret cisco
+		crypto key generate rsa
+		1024
+		line vty 04
+		login local
+		transport input ssh
+		exit
+		line console 0
+		loggin synchronous
+		exit
+		end
+		do wr
+
+	b) IP configuration:
+	
+		en (cisco)
+		conf t
+		interface gigabitEthernet 0/0
+		ip address 172.16.0.1 255.255.240.0
+		no shutdown
+		exit
+		do wr
+		
+	c) Configure DHCP:
+		
+		en (cisco)
+		conf t
+		ip dhcp pool HA-LAN
+		network 172.16.0.0 255.255.240.0
+		default-router 172.16.0.1
+		dns-server 172.16.0.254
+		exit
+		ip dhcp excluded-address 172.16.0.1
+		ip dhcp excluded-address 172.16.0.254
+		do show ip dhcp pool
+		do wr
+		
+		
+		
+		
